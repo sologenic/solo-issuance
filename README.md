@@ -9,7 +9,7 @@ $ npm install
 run the code
 
 ```
-$ node inssue.js
+$ node issue.js
 ```
 
 Check blueprint.yaml for the transaction flow
