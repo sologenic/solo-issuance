@@ -1,0 +1,42 @@
+# Issuance configuration of distribution
+
+xrpl: "wss://testnet.xrpl-labs.com"
+redis:
+  host: "127.0.0.1"
+  port: 6379
+issuance:
+  genesis:
+    account:
+      address: "rLLuutqA65gDHvFVuUxSeTxt2hMHE9eZ6R"
+      secret: "shcPdarv9KotjQddUUUd4afMgZtoX"
+  currencyCode: "534F4C4F00000000000000000000000000000000"
+  beforeOperation:
+    transactions: []
+    flags:
+      - 3 #asfDisallowXRP
+      - 6 #asfNoFreeze
+      - 8 #asfDefaultRipple
+  distributions:
+    - name: "cold"
+      account:
+        address: "rfTrMMbrwQD18ku16GNtN37Mm93wMaLHAR"
+        secret: "snNoRgAxjoxoTxcLQEVzm9KxPr1Lo"
+      transactions:
+        - type: Payment
+          amount: 50_000_000
+        - type: Payment
+          amount: 50_000_000
+    - name: "hot"
+      account:
+        address: "ra39YgD83Fx5qK8585UdhFiy998oitNXCJ"
+        secret: "sah9K2zocw91DAdRV2QnnFsd9rqRT"
+      transactions:
+        - type: Payment
+          amount: 100_000_000
+  afterOperation:
+    transactions:
+      - type: SetRegularKey
+        options:
+          RegularKey: "rrrrrrrrrrrrrrrrrrrrBZbvji"
+    flags:
+      - 4 #asfDisableMaster
