@@ -49,7 +49,7 @@ const ƨ = require("sologenic-xrpl-stream-js");
       sologenic.submit({
         TransactionType: transaction.type,
         Account: blueprint.issuance.genesis.account.address,
-        ...options
+        ...transaction.options
       });
     }
 
@@ -65,10 +65,7 @@ const ƨ = require("sologenic-xrpl-stream-js");
     for (const distribution of blueprint.issuance.distributions) {
       await sologenic.setAccount(distribution.account);
 
-      const limit = distribution.transactions.reduce(
-        (a, b) => +a + +b.amount,
-        0
-      );
+      const limit = blueprint.issuance.totalSupply;
 
       //   Set the trustlines
       await sologenic.submit({

@@ -7,29 +7,35 @@ redis:
 issuance:
   genesis:
     account:
-      address: "rLLuutqA65gDHvFVuUxSeTxt2hMHE9eZ6R"
-      secret: "shcPdarv9KotjQddUUUd4afMgZtoX"
+      address: "rK9TM6ewzMtifMDib57AZ6TBcpp81JYwZF"
+      secret: "shJGvnajR3xo8u8KRnjzgipiiToDw"
   currencyCode: "534F4C4F00000000000000000000000000000000"
+  totalSupply: 400_000_000
   beforeOperation:
-    transactions: []
+    transactions:
+      - type: AccountSet
+        options:
+          TransferRate: 1000100000
+          EmailHash: "7AC3878BF42A5329698F468A6AAA03B9"
+          Domain: "736F6C6F67656E69632E636F6D"
     flags:
       - 3 #asfDisallowXRP
       - 6 #asfNoFreeze
       - 8 #asfDefaultRipple
   distributions:
-    - name: "cold"
+    - name: "A"
       account:
-        address: "rfTrMMbrwQD18ku16GNtN37Mm93wMaLHAR"
-        secret: "snNoRgAxjoxoTxcLQEVzm9KxPr1Lo"
+        address: "rLocsgGQQWyRyiLwgir46Q8xYpMK5erLVf"
+        secret: "ss24nRwYweEtxk5USbJastrb6Sgji"
       transactions:
         - type: Payment
           amount: 50_000_000
         - type: Payment
           amount: 50_000_000
-    - name: "hot"
+    - name: "B"
       account:
-        address: "ra39YgD83Fx5qK8585UdhFiy998oitNXCJ"
-        secret: "sah9K2zocw91DAdRV2QnnFsd9rqRT"
+        address: "rhWkvNKWt67WLJRDreHTTpUy1ddFM7q7f5"
+        secret: "sszpY5jTQUaUA8sk7aPJyGHyFaHKG"
       transactions:
         - type: Payment
           amount: 100_000_000
