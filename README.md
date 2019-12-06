@@ -15,6 +15,8 @@ $ node issue.js
 Instructions: blueprint.yaml
 
 ```yaml
+# Issuance configuration of distribution
+
 xrpl: "wss://testnet.xrpl-labs.com"
 redis:
   host: "127.0.0.1"
@@ -22,8 +24,8 @@ redis:
 issuance:
   genesis:
     account:
-      address: "rK9TM6ewzMtifMDib57AZ6TBcpp81JYwZF"
-      secret: "shJGvnajR3xo8u8KRnjzgipiiToDw"
+      address: "rf7QP7mGsG4Zcy5LpCpezqMjUKZCkikSD"
+      secret: "xxx"
   currencyCode: "534F4C4F00000000000000000000000000000000"
   totalSupply: 400_000_000
   beforeOperation:
@@ -33,25 +35,32 @@ issuance:
           TransferRate: 1000100000
           EmailHash: "7AC3878BF42A5329698F468A6AAA03B9"
           Domain: "736F6C6F67656E69632E636F6D"
-    flags:
-      - 3 #asfDisallowXRP
-      - 6 #asfNoFreeze
-      - 8 #asfDefaultRipple
+      - type: AccountSet
+        options:
+          SetFlag: 3 #asfDisallowXRP
+      - type: AccountSet
+        options:
+          SetFlag: 6 #asfNoFreeze
+      - type: AccountSet
+        options:
+          SetFlag: 8 #asfDefaultRipple
   distributions:
     - name: "A"
       account:
-        address: "rLocsgGQQWyRyiLwgir46Q8xYpMK5erLVf"
-        secret: "ss24nRwYweEtxk5USbJastrb6Sgji"
-      transactions:
+        address: "rEN7vx5uQLQkt4ZNqzQ4ZrLRkAbjFoV5my"
+        secret: "xxx"
+      TrustSetFlags: 0x00020000 #tfSetNoRipple
+      send:
         - type: Payment
           amount: 50_000_000
         - type: Payment
           amount: 50_000_000
     - name: "B"
       account:
-        address: "rhWkvNKWt67WLJRDreHTTpUy1ddFM7q7f5"
-        secret: "sszpY5jTQUaUA8sk7aPJyGHyFaHKG"
-      transactions:
+        address: "rBJuHN9wJMBT2D6fEidFPH6Ax9o6vcAxj8"
+        secret: "xxx"
+      TrustSetFlags: 0x00020000 #tfSetNoRipple
+      send:
         - type: Payment
           amount: 100_000_000
   afterOperation:
@@ -59,8 +68,9 @@ issuance:
       - type: SetRegularKey
         options:
           RegularKey: "rrrrrrrrrrrrrrrrrrrrBZbvji"
-    flags:
-      - 4 #asfDisableMaster
+      - type: AccountSet
+        options:
+          SetFlag: 4 #asfDisableMaster
 ```
 
 Sample transaction between two accounts:
@@ -68,16 +78,16 @@ Sample transaction between two accounts:
 ```json
 {
   "TransactionType": "Payment",
-  "Account": "rLocsgGQQWyRyiLwgir46Q8xYpMK5erLVf",
-  "Destination": "rhWkvNKWt67WLJRDreHTTpUy1ddFM7q7f5",
+  "Account": "rEN7vx5uQLQkt4ZNqzQ4ZrLRkAbjFoV5my",
+  "Destination": "rBJuHN9wJMBT2D6fEidFPH6Ax9o6vcAxj8",
   "SendMax": {
     "currency": "534F4C4F00000000000000000000000000000000",
-    "issuer": "rK9TM6ewzMtifMDib57AZ6TBcpp81JYwZF",
-    "value": "400000000"
+    "issuer": "rf7QP7mGsG4Zcy5LpCpezqMjUKZCkikSD",
+    "value": "10001"
   },
   "Amount": {
     "currency": "534F4C4F00000000000000000000000000000000",
-    "issuer": "rK9TM6ewzMtifMDib57AZ6TBcpp81JYwZF",
+    "issuer": "rf7QP7mGsG4Zcy5LpCpezqMjUKZCkikSD",
     "value": "10000"
   }
 }

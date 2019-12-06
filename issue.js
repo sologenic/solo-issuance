@@ -46,19 +46,10 @@ const ƨ = require("sologenic-xrpl-stream-js");
 
     // transactions
     for (const transaction of blueprint.issuance.beforeOperation.transactions) {
-      sologenic.submit({
+      await sologenic.submit({
         TransactionType: transaction.type,
         Account: blueprint.issuance.genesis.account.address,
         ...transaction.options
-      });
-    }
-
-    // flags
-    for (const flag of blueprint.issuance.beforeOperation.flags) {
-      await sologenic.submit({
-        TransactionType: "AccountSet",
-        Account: blueprint.issuance.genesis.account.address,
-        SetFlag: flag
       }).promise;
     }
 
@@ -75,12 +66,13 @@ const ƨ = require("sologenic-xrpl-stream-js");
           currency: blueprint.issuance.currencyCode,
           issuer: blueprint.issuance.genesis.account.address,
           value: limit.toString()
-        }
+        },
+        Flags: distribution.TrustSetFlags
       }).promise;
 
       // send IOUs
       await sologenic.setAccount(blueprint.issuance.genesis.account);
-      for (const transaction of distribution.transactions) {
+      for (const transaction of distribution.send) {
         await sologenic.submit({
           TransactionType: transaction.type,
           Account: blueprint.issuance.genesis.account.address,
@@ -104,14 +96,6 @@ const ƨ = require("sologenic-xrpl-stream-js");
         TransactionType: transaction.type,
         Account: blueprint.issuance.genesis.account.address,
         ...transaction.options
-      }).promise;
-    }
-    // flags
-    for (const flag of blueprint.issuance.afterOperation.flags) {
-      await sologenic.submit({
-        TransactionType: "AccountSet",
-        Account: blueprint.issuance.genesis.account.address,
-        SetFlag: flag
       }).promise;
     }
   } catch (error) {
